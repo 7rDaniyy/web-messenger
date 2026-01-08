@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Messenger P2P</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Модальное окно для имени пользователя -->
+        <div class="modal" id="usernameModal" style="display: flex;">
+            <div class="modal-content">
+                <h2><i class="fas fa-user-circle"></i> Добро пожаловать!</h2>
+                <p>Введите ваше имя для начала общения</p>
+                <input type="text" id="usernameInput" placeholder="Ваше имя" maxlength="20">
+                <div class="modal-buttons">
+                    <button id="saveUsername" class="btn-primary">Сохранить</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Модальное окно для подключения к другу -->
+        <div class="modal" id="connectModal">
+            <div class="modal-content">
+                <h2><i class="fas fa-user-plus"></i> Подключиться к другу</h2>
+                <p>Введите ID вашего друга или создайте новый чат</p>
+                <input type="text" id="friendIdInput" placeholder="ID друга">
+                <div class="modal-buttons">
+                    <button id="connectToFriend" class="btn-primary">Подключиться</button>
+                    <button id="createNewChat" class="btn-secondary">Новый чат</button>
+                    <button id="closeConnectModal" class="btn-secondary">Отмена</button>
+                </div>
+                <div class="connection-info">
+                    <p><strong>Ваш ID:</strong> <span id="myId">Загрузка...</span></p>
+                    <button id="copyId" class="btn-small"><i class="fas fa-copy"></i> Скопировать ID</button>
+                    <p class="info-text">Поделитесь этим ID с другом, чтобы он мог к вам подключиться</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-comments"></i> Чаты</h2>
+                <button class="btn-new-chat" id="newChatBtn" title="Новый чат">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+            <div class="chats-list" id="chatsList">
+                <!-- Чаты загружаются из IndexedDB -->
+            </div>
+            <div class="user-profile">
+                <div class="avatar" id="userAvatar">U</div>
+                <div class="user-info">
+                    <span id="usernameDisplay">Гость</span>
+                    <small id="connectionStatus">Не в сети</small>
+                </div>
+                <button class="btn-icon" id="settingsBtn" title="Настройки">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="main-chat" id="mainChat">
+            <div class="chat-placeholder" id="chatPlaceholder">
+                <i class="fas fa-comment-dots fa-3x"></i>
+                <h3>Добро пожаловать в P2P Messenger!</h3>
+                <p>Создайте новый чат или подключитесь к другу</p>
+                <button id="startChatBtn" class="btn-primary">Начать общение</button>
+                <div class="features">
+                    <div class="feature">
+                        <i class="fas fa-shield-alt"></i>
+                        <p>P2P шифрование</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-database"></i>
+                        <p>Локальное хранение</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-bolt"></i>
+                        <p>Прямое соединение</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="active-chat" id="activeChat" style="display: none;">
+                <div class="chat-header">
+                    <div class="chat-info">
+                        <div class="chat-avatar" id="currentChatAvatar">Ч</div>
+                        <div>
+                            <h3 id="chatTitle">Чат</h3>
+                            <small id="chatStatus">Подключение...</small>
+                        </div>
+                    </div>
+                    <div class="chat-actions">
+                        <button class="btn-icon" id="callBtn" title="Звонок">
+                            <i class="fas fa-phone"></i>
+                        </button>
+                        <button class="btn-icon" id="videoCallBtn" title="Видеозвонок">
+                            <i class="fas fa-video"></i>
+                        </button>
+                        <button class="btn-icon" id="chatInfoBtn" title="Информация о чате">
+                            <i class="fas fa-info-circle"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="messages-container" id="messagesContainer">
+                    <!-- Сообщения загружаются здесь -->
+                </div>
+
+                <div class="message-input-container">
+                    <div class="input-actions">
+                        <button class="btn-icon" id="emojiBtn"><i class="fas fa-smile"></i></button>
+                        <button class="btn-icon" id="fileBtn"><i class="fas fa-paperclip"></i></button>
+                    </div>
+                    <input type="text" id="messageInput" placeholder="Введите сообщение..." autocomplete="off" disabled>
+                    <button class="btn-send" id="sendMessageBtn" disabled>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.4.7/peerjs.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
